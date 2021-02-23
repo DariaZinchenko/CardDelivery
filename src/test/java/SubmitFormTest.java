@@ -1,6 +1,3 @@
-import com.codeborne.selenide.ClickOptions;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.ElementsContainer;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
 
@@ -50,9 +47,11 @@ public class SubmitFormTest {
         $("[data-test-id='phone'] .input__control").setValue("+79200000000");
         $("[data-test-id='agreement'] .checkbox__box").click();
         $("[role='button']").submit();
-        SelenideElement element = $("[data-test-id='notification']").shouldBe(visible, Duration.ofSeconds(15));
+        //$("[data-test-id='notification'] .notification__title").shouldHave(text("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        $(byText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
 
-        String text = element.getText().replaceAll("\\s\\s*", " ");
+
+        String text = $("[data-test-id='notification'] .notification__content").getText().replaceAll("\\s\\s*", " ");
         assertEquals("Успешно! Встреча успешно забронирована на " + date, text);
 
     }
@@ -69,10 +68,12 @@ public class SubmitFormTest {
         $("[data-test-id='phone'] .input__control").setValue("+79200000000");
         $("[data-test-id='agreement'] .checkbox__box").click();
         $("[role='button']").submit();
-        SelenideElement element1 = $("[data-test-id='notification']") .shouldBe(visible, Duration.ofSeconds(15));
+        //SelenideElement element1 = $("[data-test-id='notification']").shouldBe(visible, Duration.ofSeconds(15));
+        $(byText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
 
-        String text = element1.getText().replaceAll("\\s\\s*", " ");
-        assertEquals("Успешно! Встреча успешно забронирована на " + getFormatDate(date), text);
+
+        String text = $("[data-test-id='notification'] .notification__content").getText().replaceAll("\\s\\s*", " ");
+        assertEquals("Успешно! Встреча успешно забронирована на " + date, text);
     }
 
 
