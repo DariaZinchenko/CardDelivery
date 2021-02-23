@@ -48,7 +48,7 @@ public class SubmitFormTest {
         $("[data-test-id='agreement'] .checkbox__box").click();
         $("[role='button']").submit();
         //$("[data-test-id='notification'] .notification__title").shouldHave(text("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
-        $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        $(withText("Успешно!")).waitUntil(visible, 15000);
 
 
         String text = $("[data-test-id='notification'] .notification__content").getText().replaceAll("\\s\\s*", " ");
@@ -69,7 +69,7 @@ public class SubmitFormTest {
         $("[data-test-id='agreement'] .checkbox__box").click();
         $("[role='button']").submit();
         //SelenideElement element1 = $("[data-test-id='notification']").shouldBe(visible, Duration.ofSeconds(15));
-        $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        $(withText("Успешно!")).waitUntil(visible, 15000);
 
 
         String text = $("[data-test-id='notification'] .notification__content").getText().replaceAll("\\s\\s*", " ");
