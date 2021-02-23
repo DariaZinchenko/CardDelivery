@@ -48,11 +48,11 @@ public class SubmitFormTest {
         $("[data-test-id='agreement'] .checkbox__box").click();
         $("[role='button']").submit();
         //$("[data-test-id='notification'] .notification__title").shouldHave(text("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
-        $(byText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
 
 
         String text = $("[data-test-id='notification'] .notification__content").getText().replaceAll("\\s\\s*", " ");
-        assertEquals("Успешно! Встреча успешно забронирована на " + date, text);
+        assertEquals("Встреча успешно забронирована на " + date, text);
 
     }
 
@@ -69,11 +69,11 @@ public class SubmitFormTest {
         $("[data-test-id='agreement'] .checkbox__box").click();
         $("[role='button']").submit();
         //SelenideElement element1 = $("[data-test-id='notification']").shouldBe(visible, Duration.ofSeconds(15));
-        $(byText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
 
 
         String text = $("[data-test-id='notification'] .notification__content").getText().replaceAll("\\s\\s*", " ");
-        assertEquals("Успешно! Встреча успешно забронирована на " + date, text);
+        assertEquals("Встреча успешно забронирована на " + getFormatDate(date), text);
     }
 
 
