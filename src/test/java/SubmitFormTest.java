@@ -1,9 +1,7 @@
 import com.codeborne.selenide.SelenideElement;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -24,8 +22,9 @@ public class SubmitFormTest {
         GregorianCalendar now = new GregorianCalendar();
 
         $("[data-test-id='date'] [type='button']").click();
-        if(calendar.get(Calendar.MONTH) != now.get(Calendar.MONTH)){
+        while(calendar.get(Calendar.MONTH) != now.get(Calendar.MONTH)){
             $("[class='calendar__arrow calendar__arrow_direction_right']").click();
+            calendar.add(Calendar.MONTH, 1);
         }
         $(byText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)))).click();
     }
@@ -36,7 +35,7 @@ public class SubmitFormTest {
     }
 
     @Test
-    void SetTextSubmitFormTest(){
+    void setTextSubmitFormTest(){
         GregorianCalendar calendar = new GregorianCalendar();
         calendar.add(Calendar.DATE, 3);
         String date = getFormatDate(calendar);
@@ -48,9 +47,8 @@ public class SubmitFormTest {
         $("[data-test-id='phone'] .input__control").setValue("+79200000000");
         $("[data-test-id='agreement'] .checkbox__box").click();
         $("[role='button']").submit();
-        //$("[data-test-id='notification'] .notification__title").shouldHave(text("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
-        $(withText("Успешно!")).waitUntil(visible, 15000);
 
+        $(withText("Успешно!")).waitUntil(visible, 15000);
 
         String text = $("[data-test-id='notification'] .notification__content").getText().replaceAll("\\s\\s*", " ");
         assertEquals("Встреча успешно забронирована на " + date, text);
@@ -58,7 +56,7 @@ public class SubmitFormTest {
     }
 
     @Test
-    void SetByControlSubmitFormTest(){
+    void setByControlSubmitFormTest(){
         GregorianCalendar date = new GregorianCalendar();
         date.add(Calendar.DATE, 7);
 
@@ -69,9 +67,8 @@ public class SubmitFormTest {
         $("[data-test-id='phone'] .input__control").setValue("+79200000000");
         $("[data-test-id='agreement'] .checkbox__box").click();
         $("[role='button']").submit();
-        //SelenideElement element1 = $("[data-test-id='notification']").shouldBe(visible, Duration.ofSeconds(15));
-        $(withText("Успешно!")).waitUntil(visible, 15000);
 
+        $(withText("Успешно!")).waitUntil(visible, 15000);
 
         String text = $("[data-test-id='notification'] .notification__content").getText().replaceAll("\\s\\s*", " ");
         assertEquals("Встреча успешно забронирована на " + getFormatDate(date), text);
