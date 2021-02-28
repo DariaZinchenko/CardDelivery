@@ -19,12 +19,13 @@ public class SubmitFormTest {
     }
 
     private void setDateByDatePicker(GregorianCalendar calendar){
-        GregorianCalendar now = new GregorianCalendar();
-
+        String[] s = $(".calendar__name").getOwnText().split(" ");
+        int datePickerMonth = (Month.valueOf(s[0].toUpperCase())).ordinal();
         $("[data-test-id='date'] [type='button']").click();
-        while(calendar.get(Calendar.MONTH) != now.get(Calendar.MONTH)){
+
+        while(calendar.get(Calendar.MONTH) != datePickerMonth){
             $("[class='calendar__arrow calendar__arrow_direction_right']").click();
-            calendar.add(Calendar.MONTH, 1);
+            datePickerMonth ++;
         }
         $(byText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)))).click();
     }
