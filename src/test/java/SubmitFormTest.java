@@ -1,7 +1,8 @@
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.ElementsCollection;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -12,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SubmitFormTest {
 
-    private void setCityByList(String city){
-        $("[data-test-id='city'] .input__control").setValue(city.substring(0, 2));
-        SelenideElement parentDiv = $("[class='popup popup_direction_bottom-left popup_target_anchor popup_size_m popup_visible popup_height_adaptive popup_theme_alfa-on-white input__popup']");
-        parentDiv.find(withText(city)).parent().click();
+    private void setCityByList(String cityName){
+        $("[data-test-id='city'] .input__control").setValue(cityName.substring(0, 2));
+        ElementsCollection cityElements = $$("[class='menu-item__control']");
+        cityElements.find(text(cityName)).click();
     }
 
     private void setDateByDatePicker(GregorianCalendar calendar){
@@ -49,7 +50,7 @@ public class SubmitFormTest {
         $("[data-test-id='agreement'] .checkbox__box").click();
         $("[role='button']").submit();
 
-        $(withText("Успешно!")).waitUntil(visible, 15000);
+        $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
 
         String text = $("[data-test-id='notification'] .notification__content").getText().replaceAll("\\s\\s*", " ");
         assertEquals("Встреча успешно забронирована на " + date, text);
@@ -69,7 +70,7 @@ public class SubmitFormTest {
         $("[data-test-id='agreement'] .checkbox__box").click();
         $("[role='button']").submit();
 
-        $(withText("Успешно!")).waitUntil(visible, 15000);
+        $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
 
         String text = $("[data-test-id='notification'] .notification__content").getText().replaceAll("\\s\\s*", " ");
         assertEquals("Встреча успешно забронирована на " + getFormatDate(date), text);
